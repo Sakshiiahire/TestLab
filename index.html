@@ -28,6 +28,35 @@
 				radial-gradient(circle at 8% 8%, rgba(8,120,207,.12), transparent 22%),
 				radial-gradient(circle at 90% 18%, rgba(10,128,124,.10), transparent 18%),
 				linear-gradient(180deg, #f8fbfd, var(--bg));
+			position: relative;
+			overflow-x: hidden;
+		}
+		body::before,
+		body::after {
+			content: "";
+			position: fixed;
+			inset: auto;
+			width: 42vw;
+			height: 42vw;
+			max-width: 540px;
+			max-height: 540px;
+			border-radius: 50%;
+			filter: blur(60px);
+			opacity: 0.6;
+			pointer-events: none;
+			z-index: 0;
+			animation: aurora-shift 14s ease-in-out infinite alternate;
+		}
+		body::before {
+			left: -8%;
+			top: 8%;
+			background: radial-gradient(circle, rgba(11,126,194,0.55), rgba(11,126,194,0));
+		}
+		body::after {
+			right: -8%;
+			top: 14%;
+			background: radial-gradient(circle, rgba(12,168,158,0.5), rgba(12,168,158,0));
+			animation-delay: 1.5s;
 		}
 
 		button, input { font: inherit; }
@@ -40,13 +69,29 @@
 			align-items: center;
 			gap: 20px;
 			padding: 14px 18px;
-			border: 1px solid var(--line);
+			border: 2px solid rgba(8, 95, 180, 0.20);
 			border-radius: 16px;
-			background: rgba(255,255,255,.86);
+			background: linear-gradient(135deg, rgba(8,120,207,0.08), rgba(10,128,124,0.08)), rgba(255,255,255,.86);
 			box-shadow: 0 8px 24px rgba(16,34,54,.06);
 			position: sticky;
 			top: 12px;
 			z-index: 5;
+			overflow: hidden;
+		}
+		.topbar::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 Q300,20 600,60 T1200,60 L1200,120 L0,120 Z' fill='rgba(255,255,255,0.4)' /%3E%3Cpath d='M0,75 Q300,45 600,75 T1200,75 L1200,120 L0,120 Z' fill='rgba(255,255,255,0.2)' /%3E%3C/svg%3E");
+			background-position: 0 0;
+			background-repeat: repeat-x;
+			background-size: 1200px 120px;
+			animation: wave-flow 15s linear infinite;
+			pointer-events: none;
+		}
+		.topbar > * {
+			position: relative;
+			z-index: 2;
 		}
 
 		.brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 800; }
@@ -61,48 +106,209 @@
 		}
 
 		nav { display: flex; gap: 18px; color: var(--muted); font-size: 14px; }
-		nav a { text-decoration: none; color: inherit; }
+		nav a { position: relative; text-decoration: none; color: inherit; }
+		nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; border-radius: 2px; background: var(--blue); transition: width 220ms ease; }
 		nav a:hover { color: var(--blue); }
+		nav a:hover::after { width: 100%; }
 
 		.hero {
 			display: grid;
-			grid-template-columns: .9fr 1.1fr;
-			gap: 24px;
+			grid-template-columns: .72fr 1.28fr;
+			gap: 0;
+			height: 250px;
 			margin-top: 18px;
-			padding: 24px;
-			border-radius: 24px;
+			padding: 0;
+			border: 0;
+			border-radius: 20px;
 			color: #fff;
-			background: linear-gradient(130deg, #0c3156, #126aa6 48%, #0d9d95, #126aa6);
-			background-size: 220% 220%;
-			box-shadow: var(--shadow);
 			overflow: hidden;
 			position: relative;
-			animation: hero-gradient 7s ease-in-out infinite alternate;
+			background: linear-gradient(90deg, #0b469f 0%, #0b62b1 35%, #0f82b3 58%, #0b8a9a 100%);
+			background-size: 220% 220%;
+			animation: hero-gradient 12s ease-in-out infinite alternate;
+			box-shadow: 0 10px 24px rgba(8, 30, 54, .10);
 		}
-		.hero::before { content: ""; position: absolute; inset: -35% auto -35% -20%; width: 28%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent); transform: rotate(18deg); animation: hero-sweep 4s ease-in-out .4s infinite; pointer-events: none; }
+		.hero::before { content: ""; display: block; position: absolute; inset: 0; background: radial-gradient(circle at 34% 28%, rgba(255,255,255,.1), transparent 30%); pointer-events: none; }
+		.hero::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.18) 38%, rgba(255,255,255,.38) 50%, rgba(255,255,255,.18) 62%, transparent 100%);
+			transform: translateX(-120%);
+			animation: hero-sweep 8s ease-in-out infinite;
+			pointer-events: none;
+		}
+		.hero .hero-copy::after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 80px;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 Q300,20 600,60 T1200,60 L1200,120 L0,120 Z' fill='rgba(255,255,255,0.25)' /%3E%3Cpath d='M0,75 Q300,45 600,75 T1200,75 L1200,120 L0,120 Z' fill='rgba(255,255,255,0.15)' /%3E%3C/svg%3E");
+			background-position: 0 0;
+			background-repeat: repeat-x;
+			background-size: 1200px 120px;
+			animation: wave-flow 15s linear infinite;
+			pointer-events: none;
+		}
 
-		.eyebrow { margin: 0 0 10px; color: #9ee6df; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+		.eyebrow { margin: 0 0 10px; color: rgba(255,255,255,.9); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
 		h1, h2, h3 { margin: 0; }
-		h1 { max-width: 650px; font-size: clamp(24px, 3.2vw, 38px); line-height: 1.06; letter-spacing: -.02em; }
+		h1 { max-width: 650px; font-size: clamp(21px, 2vw, 28px); line-height: 1.04; letter-spacing: -.02em; }
 		.hero p { max-width: 650px; margin: 16px 0 0; color: rgba(255,255,255,.82); font-size: 16px; }
-		.hero-copy { display: flex; flex-direction: column; justify-content: center; grid-column: 2; grid-row: 1; }
-		.showcase-visual { min-height: 250px; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; border: 1px solid rgba(255,255,255,.18); border-radius: 16px; background: linear-gradient(145deg, #123b91 0%, #1769b5 52%, #4db6e3 100%); position: relative; overflow: hidden; }
-		.showcase-visual::after { content: ""; position: absolute; inset: 12% 8%; border: 1px solid rgba(255,255,255,.18); border-radius: 14px; animation: visual-glow 2.2s ease-in-out infinite; pointer-events: none; }
+		.hero-copy {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			padding: 18px 28px;
+			background: linear-gradient(135deg, rgba(5,91,170,.97), rgba(12,145,151,.95));
+			font-family: Arial, Helvetica, sans-serif;
+			position: relative;
+			z-index: 1;
+		}
+		.hero-copy p, .hero-copy h1 {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		.showcase-visual {
+			min-height: 0;
+			display: block;
+			padding: 24px 0;
+			box-sizing: border-box;
+			background: #0b469f;
+			position: relative;
+			overflow: hidden;
+			z-index: 1;
+			perspective: 1200px;
+		}
+		.showcase-visual img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			min-height: 0;
+			object-fit: fill;
+			--parallax-y: 0px;
+			transform: translate3d(0, var(--parallax-y), 0) scale(1.02);
+			transform-style: preserve-3d;
+			will-change: transform;
+			animation: artwork-reveal 900ms ease-out 120ms both, artwork-float 9s ease-in-out 1s infinite alternate, artwork-wave 6s ease-in-out 2s infinite;
+		}
+		.showcase-visual::after { display: none; }
 		.hero > .showcase-visual { grid-column: 1; grid-row: 1; }
-		.showcase-visual strong { max-width: 300px; font-size: clamp(25px, 3vw, 42px); font-style: italic; line-height: 1.04; }
-		.showcase-visual strong:last-child { align-self: end; text-align: right; }
-		.showcase-visual span, .showcase-visual em { color: #ff4d68; font-style: normal; }
-		.showcase-copy h2 { max-width: 560px; font-size: clamp(17px, 1.7vw, 23px); line-height: 1.2; }
-		.showcase-copy p { max-width: 610px; margin: 11px 0 0; color: rgba(255,255,255,.86); font-size: 14px; line-height: 1.45; }
-		.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-		.btn { border: 0; border-radius: 9px; padding: 9px 12px; font-weight: 800; color: var(--navy); background: #fff; font-size: 13px; }
+		.showcase-copy h2 {
+			max-width: 620px;
+			line-height: 1.08;
+			letter-spacing: -0.035em;
+			font-weight: 400;
+			font-style: normal;
+		}
+		.hero-copy h1 { font-style: normal; }
+		.showcase-copy p {
+			max-width: 740px;
+			margin: 8px 0 0;
+			color: rgba(255,255,255,.86);
+			font-size: 12px;
+			line-height: 1.38;
+		}
+		.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+		.btn { border: 0; border-radius: 10px; padding: 10px 16px; font-weight: 800; color: #0b3f77; background: #fff; font-size: 12px; min-width: 155px; }
 		.btn.secondary { color: #fff; border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.12); }
 		.btn { transition: transform 180ms ease, box-shadow 180ms ease; }
 		.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(4,37,70,.2); }
+
+		.portal-shell {
+			margin-top: 18px;
+			padding: 18px 18px 8px;
+			border: 2px solid rgba(8, 95, 180, 0.20);
+			border-radius: 22px;
+			background: rgba(255,255,255,.78);
+			box-shadow: 0 8px 24px rgba(16,34,54,.06);
+		}
+		.portal-head {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 20px;
+			margin-bottom: 10px;
+		}
+		.portal-kicker {
+			margin: 2px 0 12px;
+			color: rgba(13, 41, 64, 0.88);
+			font-size: clamp(28px, 2.6vw, 54px);
+			font-weight: 800;
+			letter-spacing: -0.065em;
+			line-height: 1.04;
+		}
+		.portal-copy {
+			margin: 0;
+			color: var(--muted);
+			font-size: 14px;
+			line-height: 1.5;
+		}
+		.portal-links {
+			margin: 18px 0 26px;
+			padding: 0 0 0 1.2em;
+			list-style: disc;
+		}
+		.portal-links li {
+			margin: 0 0 10px;
+			color: var(--ink);
+			font-size: clamp(22px, 2vw, 42px);
+			line-height: 1.2;
+			letter-spacing: -0.05em;
+			font-weight: 700;
+		}
+		.portal-links li a {
+			color: inherit;
+			text-decoration: none;
+		}
+		.portal-card {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			padding: 18px 16px 14px;
+			border: 1px solid var(--line);
+			border-radius: 18px;
+			background: rgba(255,255,255,.7);
+			box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
+		}
+		.portal-card-icon {
+			width: 68px;
+			height: 68px;
+			display: grid;
+			place-items: center;
+			border-radius: 16px;
+			color: #fff;
+			font-size: 28px;
+			font-weight: 900;
+			background: linear-gradient(135deg, #0e7fbe, #0f6a9a);
+		}
+		.portal-card h3 {
+			font-size: clamp(26px, 2.3vw, 48px);
+			letter-spacing: -0.06em;
+		}
+		.portal-card p {
+			margin: 6px 0 0;
+			color: var(--muted);
+			font-size: 16px;
+		}
+		.portal-bar {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			gap: 8px;
+			margin-top: 14px;
+		}
+		.portal-bar span {
+			display: block;
+			height: 4px;
+			border-radius: 999px;
+			background: linear-gradient(90deg, #0a87c6, #0b8f96);
+		}
 		.hero-copy { animation: hero-copy-in 650ms ease-out both; }
 		.showcase-visual { animation: visual-in 650ms ease-out 80ms both, visual-float 3s ease-in-out .8s infinite; }
-		.showcase-visual strong:first-child { animation: visual-text-in 700ms ease-out 350ms both; }
-		.showcase-visual strong:last-child { animation: visual-text-in 700ms ease-out 550ms both; }
+		.showcase-copy h2 { animation: hero-content-in 550ms ease-out 180ms both; }
+		.showcase-copy p { animation: hero-content-in 550ms ease-out 300ms both; }
+		.actions { animation: hero-content-in 550ms ease-out 420ms both; }
 		@keyframes hero-copy-in {
 			from { opacity: 0; transform: translateX(18px); }
 			to { opacity: 1; transform: translateX(0); }
@@ -115,9 +321,35 @@
 			from { opacity: 0; transform: translateY(10px); }
 			to { opacity: 1; transform: translateY(0); }
 		}
+		@keyframes hero-content-in {
+			from { opacity: 0; transform: translateY(10px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+		@keyframes artwork-reveal {
+			from { opacity: 0; transform: scale(1.03); }
+			to { opacity: 1; transform: scale(1); }
+		}
+		@keyframes artwork-float {
+			0% { transform: translate3d(0, calc(var(--parallax-y) - 10px), 0) scale(1.02) rotateY(-2deg) rotateX(2deg); }
+			50% { transform: translate3d(0, calc(var(--parallax-y) + 4px), 0) scale(1.04) rotateY(1deg) rotateX(-1deg); }
+			100% { transform: translate3d(0, calc(var(--parallax-y) + 10px), 0) scale(1.02) rotateY(2deg) rotateX(1deg); }
+		}
+		@keyframes wave-shift {
+			from { background-position: 0 65%; }
+			to { background-position: -520px 65%; }
+		}
+		@keyframes wave-flow {
+			from { background-position: 0 0; }
+			to { background-position: 1200px 0; }
+		}
 		@keyframes hero-gradient {
 			from { background-position: 0% 50%; }
 			to { background-position: 100% 50%; }
+		}
+		@keyframes aurora-shift {
+			0% { transform: translate3d(0, 0, 0) scale(0.96); }
+			50% { transform: translate3d(20px, 10px, 0) scale(1.08); }
+			100% { transform: translate3d(-18px, 25px, 0) scale(1.12); }
 		}
 		@keyframes hero-sweep {
 			0%, 35% { left: -35%; opacity: 0; }
@@ -132,15 +364,19 @@
 			0%, 100% { opacity: .35; transform: scale(.98); }
 			50% { opacity: .9; transform: scale(1); }
 		}
+		@keyframes artwork-wave {
+			0%, 100% { filter: brightness(1) drop-shadow(0 0 2px rgba(255,255,255,0)); }
+			50% { filter: brightness(1.08) drop-shadow(0 0 12px rgba(255,255,255,.15)); }
+		}
 		.section { animation: section-in 600ms ease-out both; }
 		.section:nth-of-type(2) { animation-delay: 100ms; }
 		.section:nth-of-type(3) { animation-delay: 180ms; }
 		.section:nth-of-type(4) { animation-delay: 260ms; }
 		.section:nth-of-type(5) { animation-delay: 340ms; }
 		.stat, .cap, .demo-card, .coe-card, .contact-card { animation: card-rise 600ms ease-out both; }
-		.stat:nth-child(2), .cap:nth-child(2), .demo-card:nth-child(2), .coe-card:nth-child(2), .contact-card:nth-child(2) { animation-delay: 120ms; }
-		.stat:nth-child(3), .cap:nth-child(3), .demo-card:nth-child(3) { animation-delay: 220ms; }
-		.stat:nth-child(4), .cap:nth-child(4), .demo-card:nth-child(4) { animation-delay: 320ms; }
+		.stat:nth-child(2), .demo-card:nth-child(2), .coe-card:nth-child(2), .contact-card:nth-child(2) { animation-delay: 120ms; }
+		.stat:nth-child(3), .demo-card:nth-child(3) { animation-delay: 220ms; }
+		.stat:nth-child(4), .demo-card:nth-child(4) { animation-delay: 320ms; }
 		@keyframes card-rise {
 			from { opacity: 0; transform: translateY(14px); }
 			to { opacity: 1; transform: translateY(0); }
@@ -150,19 +386,20 @@
 			to { opacity: 1; transform: translateY(0); }
 		}
 		@media (prefers-reduced-motion: reduce) {
-			.hero, .hero-copy, .showcase-visual, .showcase-visual strong, .showcase-visual::after, .section, .stat, .cap, .demo-card, .coe-card, .contact-card, .ai-step { animation: none; }
+			.hero, .hero::after, .hero-copy, .showcase-visual, .showcase-visual img, .showcase-visual strong, .showcase-visual::after, .showcase-copy h2, .showcase-copy p, .actions, .section, .stat, .cap, .demo-card, .coe-card, .contact-card, .ai-step, .cap .knowledge-icon, .cap::after, .innovation-feature, .innovation-feature::before, .innovation-mark, .innovation-card, .innovation-card::before, .innovation-icon, .cta .btn, footer { animation: none; }
+			.cap:hover::after { opacity: 0; }
 			.ai-step, .ai-step:hover, .ai-step:focus, .ai-step:focus-within { filter: none; }
 			.ai-step-inner, .ai-step:hover .ai-step-inner, .ai-step:focus .ai-step-inner, .ai-step:focus-within .ai-step-inner { transform: none; transition: none; }
 			.btn { transition: none; }
 		}
 
 		.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 14px; }
-		.stat, .section, .demo-card, .coe-card, .contact-card { border: 1px solid var(--line); border-radius: 16px; background: var(--paper); box-shadow: 0 8px 24px rgba(16,34,54,.06); }
+		.stat, .section, .demo-card, .coe-card, .contact-card { border: 2px solid rgba(8, 95, 180, 0.18); border-radius: 16px; background: var(--paper); box-shadow: 0 8px 24px rgba(16,34,54,.06); }
 		.stat { padding: 16px; }
 		.stat strong { display: block; color: var(--blue); font-size: 26px; }
 		.stat span { color: var(--muted); font-size: 13px; }
 
-		.section { margin-top: 18px; padding: 24px; }
+		.section { margin-top: 18px; padding: 24px; border: 2px solid rgba(8, 95, 180, 0.18); border-radius: 20px; }
 		.section-head { display: flex; justify-content: space-between; align-items: end; gap: 14px; margin-bottom: 16px; }
 		.section h2 { font-size: 24px; letter-spacing: -.03em; }
 		.section-head p { margin: 5px 0 0; color: var(--muted); font-size: 14px; }
@@ -170,16 +407,16 @@
 		.knowledge { background: linear-gradient(110deg, #e7f9fb, #f0e9ff); }
 		.knowledge-head { display: grid; grid-template-columns: 1fr 1.3fr; gap: 24px; align-items: start; }
 		.knowledge-copy h2 { font-size: 28px; }
-		.knowledge-copy p { margin: 9px 0 0; color: var(--muted); line-height: 1.5; }
+		.knowledge-copy p { margin: 9px 0 0; color: #465566; line-height: 1.5; }
 		.knowledge-links { margin: 16px 0 0; padding-left: 20px; }
 		.knowledge-links li { margin: 9px 0; }
-		.knowledge-links a { color: #5d7180; font-weight: 700; }
+		.knowledge-links a { color: #17222b; font-weight: 700; }
 		.knowledge-links a:hover { color: var(--blue); }
 		.ai-journey { margin-top: 24px; padding: 18px; border: 1px solid rgba(8,120,207,.18); border-radius: 14px; background: linear-gradient(135deg, rgba(255,255,255,.84), rgba(224,244,255,.82)); }
 		.ai-journey-top { display: flex; align-items: center; gap: 12px; }
 		.ai-badge { width: 52px; height: 52px; display: grid; place-items: center; flex: 0 0 52px; border-radius: 14px; color: #fff; background: linear-gradient(135deg, #0878cf, #0a807c); font-size: 20px; font-weight: 900; }
 		.ai-journey h3 { font-size: 18px; }
-		.ai-journey-top p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+		.ai-journey-top p { margin: 3px 0 0; font-size: 12px; }
 		.ai-flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; margin-top: 14px; }
 		.ai-step { min-height: 118px; perspective: 900px; width: 100%; }
 		.ai-step-inner { position: relative; min-height: 118px; height: 100%; transform-style: preserve-3d; transition: transform 500ms cubic-bezier(.2,.7,.2,1); }
@@ -203,53 +440,149 @@
 		.ai-outcomes { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
 		.ai-outcomes span { padding: 6px 8px; border-radius: 999px; color: var(--teal); background: #e5f7f2; font-size: 11px; font-weight: 800; }
 		.knowledge-grid { display: grid; grid-template-columns: 1fr; align-content: start; gap: 12px; margin-top: 0; }
-		.knowledge-block { align-self: start; height: auto; padding: 16px; border: 1px solid #dce4ec; background: rgba(255,255,255,.82); display: flex; flex-direction: column; }
+		.knowledge-block { align-self: start; height: auto; padding: 16px; border: 2px solid rgba(8, 95, 180, 0.16); background: rgba(255,255,255,.82); display: flex; flex-direction: column; }
 		.knowledge-block h3 { font-size: 18px; line-height: 1.2; }
-		.knowledge-block p { margin: 7px 0 12px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+		.knowledge-block p { margin: 7px 0 12px; font-size: 13px; line-height: 1.4; }
 		.knowledge-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 12px; }
 		.knowledge-item { display: flex; align-items: center; gap: 9px; color: var(--ink); font-size: 13px; font-weight: 700; }
 		.knowledge-item a { color: inherit; text-decoration: none; }
 		.knowledge-item a:hover { color: var(--blue); text-decoration: underline; }
+		.knowledge-item .knowledge-icon { transition: transform 220ms cubic-bezier(.34,1.56,.64,1); }
+		.knowledge-item:hover .knowledge-icon { transform: scale(1.14) rotate(-6deg); }
+		.contact-card h3 a { color: inherit; text-decoration: none; }
+		.contact-card h3 a:hover { color: var(--blue); text-decoration: underline; }
 		.knowledge-icon { width: 32px; height: 32px; flex: 0 0 32px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: var(--blue); font-size: 17px; }
 
 		.cap-grid, .coe-grid, .demo-grid, .contact-grid { display: grid; gap: 12px; }
+		.demo-card.hidden { display: none; }
 		.cap-grid { grid-template-columns: repeat(4, 1fr); }
-		.cap { padding: 18px; border: 1px solid rgba(255,255,255,.5); border-radius: 14px; min-height: 150px; position: relative; overflow: hidden; }
+		#qe-assets {
+			position: relative;
+			overflow: hidden;
+			padding: 18px 18px 8px;
+			border: 2px solid rgba(8, 95, 180, 0.24);
+			border-radius: 28px;
+			background: linear-gradient(180deg, rgba(255,255,255,.80), rgba(237,244,250,.92));
+			box-shadow: 0 22px 52px rgba(10, 40, 80, 0.10), 0 0 0 1px rgba(255,255,255,.45) inset;
+			transform-origin: center bottom;
+			animation: qe-block-pop 800ms cubic-bezier(.2,.8,.2,1) both;
+		}
+		#qe-assets::before {
+			content: "";
+			position: absolute;
+			inset: 14px;
+			border-radius: 22px;
+			background: radial-gradient(circle at top, rgba(86,153,255,.18), transparent 44%);
+			pointer-events: none;
+			animation: qe-glow 1000ms ease-out 220ms both;
+		}
+		.cap { padding: 18px; border: 1px solid rgba(16, 82, 148, 0.18); border-radius: 18px; min-height: 150px; position: relative; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,0.38), 0 10px 18px rgba(16,34,54,0.06); }
 		.cap::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 18% 22%, rgba(255,255,255,.2) 0 2px, transparent 3px), radial-gradient(circle at 82% 78%, rgba(255,255,255,.18) 0 2px, transparent 3px), linear-gradient(120deg, transparent 35%, rgba(255,255,255,.13) 36%, transparent 38%); background-size: auto, auto, 78px 78px; }
 		.cap > * { position: relative; z-index: 1; }
-		.cap:nth-child(1) { background: radial-gradient(circle at 74% 20%, rgba(190,166,255,.55), transparent 20%), linear-gradient(145deg, #ecebff, #d8e0ff); }
-		.cap:nth-child(2) { background: radial-gradient(circle at 74% 20%, rgba(164,224,255,.55), transparent 20%), linear-gradient(145deg, #e9f4ff, #d4ebff); }
-		.cap:nth-child(3) { background: radial-gradient(circle at 74% 20%, rgba(174,247,221,.55), transparent 20%), linear-gradient(145deg, #e8fbf5, #d6f6ec); }
-		.cap:nth-child(4) { background: radial-gradient(circle at 74% 20%, rgba(255,210,149,.58), transparent 20%), linear-gradient(145deg, #fff3e7, #ffe8cf); }
+		.cap:nth-child(1) { background: radial-gradient(circle at 74% 20%, rgba(190,166,255,.84), transparent 20%), linear-gradient(145deg, #dde4fb, #c0cde9); background-size: 160% 160%; animation: asset-card-pop 700ms cubic-bezier(.2,.8,.2,1) 120ms both, cap-glow 6s ease-in-out infinite alternate; }
+		.cap:nth-child(2) { background: radial-gradient(circle at 74% 20%, rgba(164,224,255,.88), transparent 20%), linear-gradient(145deg, #dfeef9, #c3e1f1); background-size: 160% 160%; animation: asset-card-pop 700ms cubic-bezier(.2,.8,.2,1) 220ms both, cap-glow 6s ease-in-out .3s infinite alternate; }
+		.cap:nth-child(3) { background: radial-gradient(circle at 74% 20%, rgba(174,247,221,.92), transparent 20%), linear-gradient(145deg, #dff3e7, #c6e0d0); background-size: 160% 160%; animation: asset-card-pop 700ms cubic-bezier(.2,.8,.2,1) 320ms both, cap-glow 6s ease-in-out .6s infinite alternate; }
+		.cap:nth-child(4) { background: radial-gradient(circle at 74% 20%, rgba(255,210,149,.9), transparent 20%), linear-gradient(145deg, #f7e7d4, #ebcfa6); background-size: 160% 160%; animation: asset-card-pop 700ms cubic-bezier(.2,.8,.2,1) 420ms both, cap-glow 6s ease-in-out .9s infinite alternate; }
+		.cap:nth-child(5) { background: radial-gradient(circle at 74% 20%, rgba(255,175,199,.9), transparent 20%), linear-gradient(145deg, #f2e0ea, #e7c4d4); background-size: 160% 160%; animation: asset-card-pop 700ms cubic-bezier(.2,.8,.2,1) 520ms both, cap-glow 6s ease-in-out 1.2s infinite alternate; }
+		@keyframes cap-glow {
+			from { background-position: 0% 0%, 0% 0%; }
+			to { background-position: 0% 0%, 100% 100%; }
+		}
+		@keyframes asset-card-pop {
+			0% { opacity: 0; transform: translateY(22px) scale(.94) rotateX(8deg); }
+			60% { opacity: 1; transform: translateY(-6px) scale(1.02) rotateX(0deg); }
+			100% { opacity: 1; transform: translateY(0) scale(1); }
+		}
+		@keyframes qe-block-pop {
+			0% { opacity: 0; transform: translateY(24px) scale(.97); filter: blur(4px); }
+			60% { opacity: 1; transform: translateY(-8px) scale(1.01); filter: blur(0); }
+			100% { opacity: 1; transform: translateY(0) scale(1); }
+		}
+		@keyframes qe-glow {
+			0% { opacity: 0; transform: scale(.96); }
+			50% { opacity: 1; }
+			100% { opacity: 0; transform: scale(1.04); }
+		}
+		.qea-grid { grid-template-columns: repeat(5, 1fr); }
+		.cap { transition: transform 220ms ease, box-shadow 220ms ease; }
+		.cap::after {
+			content: "";
+			position: absolute;
+			inset: -40% auto -40% -60%;
+			width: 45%;
+			background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+			transform: rotate(14deg) translateX(0);
+			opacity: 0;
+			transition: opacity 200ms ease;
+			pointer-events: none;
+			z-index: 1;
+		}
+		.cap:hover::after { opacity: 1; animation: cap-sweep 900ms ease-out; }
+		@keyframes cap-sweep {
+			from { transform: rotate(14deg) translateX(-40%); }
+			to { transform: rotate(14deg) translateX(340%); }
+		}
+		.cap:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 18px 30px rgba(16,34,54,.15), 0 0 0 1px rgba(8,95,180,.08); }
+		.cap h3 { position: relative; display: inline-block; }
+		.cap h3::after { content: ""; position: absolute; left: 0; bottom: -3px; width: 0; height: 2px; border-radius: 2px; background: currentColor; opacity: .55; transition: width 260ms ease; }
+		.cap:hover h3::after { width: 100%; }
+		.cap .knowledge-icon { margin-bottom: 14px; transition: transform 260ms cubic-bezier(.34,1.56,.64,1), box-shadow 260ms ease; animation: icon-pop 550ms ease-out both, icon-float 3.4s ease-in-out 700ms infinite; border: 3px solid rgba(255,255,255,0.52); box-shadow: 0 8px 18px rgba(8,120,207,.18), inset 0 0 0 2px rgba(255,255,255,.15); }
+		.cap:nth-child(2) .knowledge-icon { animation-delay: 120ms, 820ms; }
+		.cap:nth-child(3) .knowledge-icon { animation-delay: 220ms, 920ms; }
+		.cap:nth-child(4) .knowledge-icon { animation-delay: 320ms, 1020ms; }
+		.cap:nth-child(5) .knowledge-icon { animation-delay: 420ms, 1120ms; }
+		.cap:hover .knowledge-icon { animation-play-state: paused; transform: scale(1.14) rotate(-8deg); box-shadow: 0 8px 16px rgba(8,120,207,.32); }
+		@keyframes icon-pop {
+			from { opacity: 0; transform: scale(.4) rotate(-20deg); }
+			to { opacity: 1; transform: scale(1) rotate(0); }
+		}
+		@keyframes icon-float {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(-5px); }
+		}
 		.icon { width: 58px; height: 58px; display: block; margin-bottom: 16px; border-radius: 16px; box-shadow: 0 8px 14px rgba(26,61,111,.12); transition: transform 180ms ease, box-shadow 180ms ease; }
 		.cap:hover .icon { transform: translateY(-3px) rotate(-2deg); box-shadow: 0 12px 20px rgba(26,61,111,.2); }
 		.cap h3, .demo-card h3, .coe-card h3, .contact-card h3 { font-size: 17px; }
+		.cap h3 a { color: inherit; text-decoration: none; }
+		.cap h3 a:hover { color: var(--blue); }
 		.cap p, .demo-card p, .coe-card p, .contact-card p { margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
 
-		.toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
-		.search { flex: 1 1 260px; min-width: 0; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; outline: 0; }
+		.toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; align-items: center; }
+		.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+		.search-wrap { position: relative; flex: 1 1 260px; min-width: 0; }
+		.search-wrap::before { content: ""; position: absolute; top: 50%; left: 14px; width: 13px; height: 13px; transform: translateY(-55%); border: 2px solid var(--blue); border-radius: 50%; pointer-events: none; }
+		.search-wrap::after { content: ""; position: absolute; top: calc(50% + 7px); left: 27px; width: 7px; height: 2px; transform: rotate(45deg); transform-origin: left center; background: var(--blue); pointer-events: none; }
+		.search { width: 100%; min-width: 0; box-sizing: border-box; padding: 11px 13px 11px 40px; border: 1px solid var(--line); border-radius: 10px; outline: 0; transition: border-color 200ms ease, box-shadow 200ms ease; }
 		.search:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(8,120,207,.12); }
-		.filter { padding: 10px 13px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: #fff; font-weight: 700; }
-		.filter.active, .filter:hover { color: #fff; border-color: var(--blue); background: var(--blue); }
+		.filter { padding: 10px 13px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: #fff; font-weight: 700; transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease; }
+		.filter.active, .filter:hover { color: #fff; border-color: var(--blue); background: var(--blue); transform: translateY(-1px); }
 		.demo-grid { grid-template-columns: repeat(4, 1fr); }
-		.demo-card { overflow: hidden; transition: transform .18s ease, box-shadow .18s ease; }
+		.demo-card { display: flex; flex-direction: column; overflow: visible; transition: transform .18s ease, box-shadow .18s ease; }
 		.demo-card:hover, .coe-card:hover, .contact-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 		.thumb { height: 150px; display: flex; align-items: end; justify-content: space-between; padding: 14px; position: relative; overflow: hidden; color: #fff; background: radial-gradient(circle at 72% 25%, rgba(255,255,255,.34), transparent 18%), linear-gradient(135deg, #ed6b2f, #7f2d61 58%, #17275e); }
-		.thumb::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.18) 0 2px, transparent 3px), radial-gradient(circle at 80% 70%, rgba(255,255,255,.14) 0 2px, transparent 3px), linear-gradient(120deg, transparent 35%, rgba(255,255,255,.12) 36%, transparent 38%); background-size: auto, auto, 90px 90px; opacity: .9; }
-		.thumb::after { content: "▶"; position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 40px; height: 40px; transform: translate(-50%, -50%); border: 2px solid rgba(255,255,255,.9); border-radius: 50%; color: #fff; background: rgba(7,24,65,.42); font-size: 15px; }
-		.thumb h3 { position: relative; z-index: 1; max-width: 78%; color: #fff; font-size: 16px; line-height: 1.15; text-shadow: 0 2px 8px rgba(0,0,0,.4); }
+		.thumb::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.18) 0 2px, transparent 3px), radial-gradient(circle at 80% 70%, rgba(255,255,255,.14) 0 2px, transparent 3px), linear-gradient(120deg, transparent 35%, rgba(255,255,255,.12) 36%, transparent 38%); background-size: auto, auto, 90px 90px; opacity: .9; }
+		.demo-art { position: absolute; right: -12px; top: -8px; z-index: 0; width: 145px; height: 145px; object-fit: contain; opacity: .36; filter: brightness(1.4) saturate(.75); transform: rotate(-8deg); }
+		.thumb::after { content: "▶"; position: absolute; left: 50%; top: 50%; z-index: 2; display: grid; place-items: center; width: 40px; height: 40px; transform: translate(-50%, -50%); border: 2px solid rgba(255,255,255,.9); border-radius: 50%; color: #fff; background: rgba(7,24,65,.42); font-size: 15px; }
+		.thumb h3 { position: relative; z-index: 2; max-width: 78%; color: #fff; font-size: 16px; line-height: 1.15; text-shadow: 0 2px 8px rgba(0,0,0,.4); }
 		.demo-card:nth-child(2) .thumb { background: radial-gradient(circle at 75% 22%, rgba(139,222,255,.5), transparent 20%), linear-gradient(135deg, #113d87, #188fc3 56%, #071e5d); }
 		.demo-card:nth-child(3) .thumb { background: radial-gradient(circle at 70% 28%, rgba(255,142,255,.4), transparent 22%), linear-gradient(135deg, #25106e, #7138d5 54%, #1a174f); }
 		.demo-card:nth-child(4) .thumb { background: radial-gradient(circle at 75% 25%, rgba(255,232,133,.42), transparent 20%), linear-gradient(135deg, #075c6d, #09a18f 56%, #123d57); }
-		.demo-body { padding: 15px; }
+		.demo-body { flex: 1; display: flex; flex-direction: column; padding: 15px; }
+		.demo-body > p { min-height: 57px; }
 		.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
 		.tag { padding: 5px 8px; border-radius: 999px; color: var(--blue); background: #edf5ff; font-size: 11px; font-weight: 800; }
 		.card-action { display: inline-block; margin-top: 14px; color: var(--blue); font-size: 12px; font-weight: 800; }
+		.demo-links { position: relative; z-index: 3; margin-top: auto; padding-top: 13px; }
+		.demo-links summary { color: var(--blue); cursor: pointer; font-size: 12px; font-weight: 800; }
+		.demo-links[open] ul { position: absolute; right: 0; bottom: 25px; left: 0; display: grid; gap: 7px; margin: 0; padding: 12px; border: 1px solid var(--line); border-radius: 10px; list-style: none; background: #fff; box-shadow: 0 10px 24px rgba(16,34,54,.16); }
+		.demo-links a { color: var(--blue); font-size: 11px; font-weight: 700; line-height: 1.3; text-decoration: none; }
+		.demo-links a:hover { text-decoration: underline; }
 
 		.coe-grid { grid-template-columns: repeat(4, 1fr); }
 		.coe-card { overflow: hidden; background: #fff; transition: transform .18s ease, box-shadow .18s ease; }
 		.coe-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-		.coe-visual { display: block; width: 100%; aspect-ratio: 1.7; object-fit: cover; }
+		.coe-visual { display: block; width: 100%; aspect-ratio: 1.7; object-fit: cover; transition: transform 320ms ease; }
+		.coe-card:hover .coe-visual { transform: scale(1.07); }
 		.coe-body { padding: 13px; }
 		.coe-card strong { display: inline-block; margin-bottom: 8px; padding: 5px 8px; border-radius: 999px; color: #fff; background: var(--blue); font-size: 10px; }
 		.coe-card:nth-child(1) strong { background: #6c35d5; }
@@ -259,13 +592,58 @@
 		.coe-card h3 { color: var(--ink); font-size: 15px; }
 		.coe-card p { color: var(--muted); font-size: 11px; }
 		.coe-card .card-action { color: var(--blue); font-size: 11px; }
+		.innovation-feature { position: relative; overflow: hidden; margin-top: 22px; padding: 24px; scroll-margin-top: 100px; border: 2px solid rgba(11,70,159,.22); border-radius: 18px; background: linear-gradient(125deg, #e5f3ff 0%, #f8fbfd 52%, #dcf7ed 100%); background-size: 180% 180%; box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 16px 36px rgba(16,34,54,.10); animation: innovation-bg 10s ease-in-out infinite alternate; }
+		.innovation-feature::before { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 28%, rgba(255,255,255,.52) 48%, transparent 68%); transform: translateX(-120%); animation: innovation-sweep 7s ease-in-out infinite; pointer-events: none; }
+		.innovation-head { position: relative; display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+		.innovation-mark { width: 48px; height: 48px; display: grid; place-items: center; flex: 0 0 48px; border-radius: 14px; color: #fff; background: linear-gradient(135deg, #0b469f, #0a807c); box-shadow: 0 9px 20px rgba(8,95,180,.22); font-size: 21px; font-weight: 900; animation: innovation-mark-pulse 3s ease-in-out infinite; }
+		.innovation-eyebrow { display: block; margin-bottom: 3px; color: #0a807c; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+		.innovation-head h3 { font-size: 22px; }
+		.innovation-head p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+		.innovation-grid { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+		.innovation-card { position: relative; min-height: 174px; padding: 18px; overflow: hidden; border: 1px solid rgba(8,95,180,.20); border-radius: 12px; background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(219,238,255,.82)); box-shadow: 0 8px 18px rgba(16,34,54,.07); transition: transform 280ms cubic-bezier(.2,.8,.2,1), box-shadow 280ms ease, border-color 280ms ease; animation: innovation-card-in 650ms cubic-bezier(.2,.8,.2,1) both; }
+		.innovation-card:nth-child(2) { animation-delay: 120ms; }
+		.innovation-card:nth-child(3) { animation-delay: 240ms; }
+		.innovation-card:nth-child(2) { border-color: rgba(215,99,37,.22); background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(255,229,206,.84)); }
+		.innovation-card:nth-child(3) { border-color: rgba(10,128,124,.22); background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(209,242,232,.86)); }
+		.innovation-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, #0b62b1, #61b8ef); transform-origin: left; animation: innovation-line 2.4s ease-in-out infinite alternate; }
+		.innovation-card:nth-child(2)::before { background: linear-gradient(90deg, #d76325, #f4aa45); animation-delay: .35s; }
+		.innovation-card:nth-child(3)::before { background: linear-gradient(90deg, #0a807c, #56cfac); animation-delay: .7s; }
+		.innovation-card:hover { transform: translateY(-8px) scale(1.015); border-color: rgba(8,95,180,.38); box-shadow: 0 18px 32px rgba(16,34,54,.15); }
+		.innovation-card::after { content: ""; position: absolute; top: 50%; right: -13px; width: 13px; height: 2px; background: rgba(8,95,180,.28); }
+		.innovation-card:last-child::after { display: none; }
+		.innovation-number { display: block; color: rgba(16,34,54,.34); font-size: 10px; font-weight: 900; letter-spacing: .14em; }
+		.innovation-icon { width: 38px; height: 38px; display: grid; place-items: center; margin: 4px 0 14px; border-radius: 10px; color: #fff; background: #0b62b1; font-size: 16px; font-weight: 900; box-shadow: 0 7px 14px rgba(11,98,177,.22); animation: innovation-icon-float 3s ease-in-out infinite; }
+		.innovation-card:nth-child(2) .innovation-icon { background: #d76325; box-shadow: 0 7px 14px rgba(215,99,37,.22); }
+		.innovation-card:nth-child(2) .innovation-icon { animation-delay: .35s; }
+		.innovation-card:nth-child(3) .innovation-icon { background: #0a807c; box-shadow: 0 7px 14px rgba(10,128,124,.22); animation-delay: .7s; }
+		.innovation-card h4 { margin: 0; color: var(--ink); font-size: 17px; }
+		.innovation-card p { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+		@keyframes innovation-card-in { from { opacity: 0; transform: translateY(16px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+		@keyframes innovation-sweep { 0%, 55% { transform: translateX(-120%); } 80%, 100% { transform: translateX(120%); } }
+		@keyframes innovation-bg { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+		@keyframes innovation-mark-pulse { 0%, 100% { transform: scale(1); box-shadow: 0 9px 20px rgba(8,95,180,.22); } 50% { transform: scale(1.06); box-shadow: 0 12px 26px rgba(10,128,124,.34); } }
+		@keyframes innovation-icon-float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(-3deg); } }
+		@keyframes innovation-line { from { transform: scaleX(.42); opacity: .65; } to { transform: scaleX(1); opacity: 1; } }
 		.contact-grid { grid-template-columns: repeat(2, 1fr); }
 		.contact-card { display: flex; gap: 14px; padding: 18px; }
 		.avatar { width: 52px; height: 52px; flex: 0 0 52px; display: grid; place-items: center; border-radius: 50%; color: #fff; font-weight: 800; background: linear-gradient(135deg, #203f9a, #55a4db); }
 		.avatar.orange { background: linear-gradient(135deg, #d85a2b, #f3b35e); }
+		.avatar-img { width: 52px; height: 52px; flex: 0 0 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blue); box-shadow: 0 4px 8px rgba(8, 120, 207, 0.2); transition: transform 220ms ease, box-shadow 220ms ease; }
+		.contact-card:hover .avatar-img { transform: scale(1.08) rotate(-3deg); box-shadow: 0 8px 16px rgba(8, 120, 207, 0.32); }
 		.contact-btn { margin-top: 12px; padding: 8px 11px; border: 0; border-radius: 8px; color: #fff; background: var(--blue); font-size: 12px; font-weight: 800; }
 		.cta { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-top: 18px; padding: 22px; border-radius: 16px; color: #fff; background: linear-gradient(120deg, #12385f, #0878cf); }
 		.cta p { margin: 5px 0 0; color: rgba(255,255,255,.78); font-size: 13px; }
+		.cta .btn { animation: cta-pulse 2.6s ease-in-out infinite; }
+		.cta .btn:hover { animation-play-state: paused; }
+		@keyframes cta-pulse {
+			0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,.5); }
+			50% { box-shadow: 0 0 0 8px rgba(255,255,255,0); }
+		}
+		.demo-links summary { position: relative; padding-right: 16px; color: var(--blue); cursor: pointer; font-size: 12px; font-weight: 800; list-style: none; }
+		.demo-links summary::-webkit-details-marker { display: none; }
+		.demo-links summary::after { content: "\25be"; position: absolute; right: 0; top: 50%; transform: translateY(-50%) rotate(0deg); transition: transform 220ms ease; }
+		.demo-links[open] summary::after { transform: translateY(-50%) rotate(180deg); }
+		footer { margin-top: 18px; color: var(--muted); font-size: 12px; text-align: center; animation: section-in 600ms ease-out 200ms both; }
 		.modal-backdrop { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(8, 20, 38, .5); z-index: 30; }
 		.modal-backdrop.open { display: flex; }
 		.modal { width: min(520px, 100%); padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: #fff; box-shadow: 0 22px 48px rgba(12, 31, 56, .28); }
@@ -277,13 +655,17 @@
 		.form-grid input:focus, .form-grid select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(8,120,207,.12); outline: 0; }
 		.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
 		.btn.ghost { border: 1px solid var(--line); color: var(--muted); background: #fff; }
-		footer { margin-top: 18px; color: var(--muted); font-size: 12px; text-align: center; }
 
 		@media (max-width: 900px) {
-			.hero { grid-template-columns: 1fr; }
+			.hero { grid-template-columns: 1fr; height: auto; }
+			.showcase-visual { min-height: auto; aspect-ratio: 16 / 9; }
+			.showcase-visual img { min-height: 0; object-fit: fill; }
 			.hero-copy, .hero > .showcase-visual { grid-column: 1; grid-row: auto; }
 			.cap-grid, .demo-grid { grid-template-columns: repeat(2, 1fr); }
-			.coe-grid { grid-template-columns: 1fr; }
+			.coe-grid { grid-template-columns: repeat(2, 1fr); }
+			.innovation-grid { grid-template-columns: 1fr; }
+			.innovation-card::after { top: auto; right: 50%; bottom: -13px; width: 2px; height: 13px; }
+			.contact-grid { grid-template-columns: repeat(2, 1fr); }
 			.knowledge-head, .knowledge-grid { grid-template-columns: 1fr; }
 			.ai-flow { grid-template-columns: repeat(3, 1fr); }
 		}
@@ -292,32 +674,39 @@
 			.topbar { position: static; align-items: flex-start; flex-direction: column; }
 			nav { flex-wrap: wrap; gap: 10px; }
 			.hero, .section { padding: 20px; }
-			.stats, .cap-grid, .demo-grid, .contact-grid, .knowledge-items { grid-template-columns: 1fr; }
+			.stats, .cap-grid, .demo-grid, .knowledge-items { grid-template-columns: 1fr; }
 			.ai-flow { grid-template-columns: 1fr; }
+			.innovation-feature { padding: 18px; }
+			.innovation-head { align-items: flex-start; }
 			.cta { align-items: flex-start; flex-direction: column; }
+		}
+		@media (max-width: 480px) {
+			.coe-grid, .contact-grid { grid-template-columns: 1fr; }
 		}
 	</style>
 </head>
 <body>
 	<main class="page">
 		<header class="topbar">
-			<div class="brand"><span class="brand-mark">QE</span><span>Sogeti Testing Lab</span></div>
+			<div class="brand"><span class="brand-mark">QE</span><span>Sogeti QE&T Lab</span></div>
 			<nav>
-				<a href="#knowledge">KnowNow</a>
-				<a href="#offerings">Offerings</a>
+				<a href="https://capgemini.sharepoint.com/sites/KnowNow/SitePages/Services/Quality%20Engineering11.aspx" target="_blank" rel="noopener noreferrer">KnowNow</a>
 				<a href="#demos">Demos</a>
 				<a href="#coes">COEs</a>
+				<a href="#innovation">Innovation</a>
 				<a href="#contacts">Contacts</a>
 			</nav>
 		</header>
 
 		<section class="hero">
+			<div class="showcase-visual" role="img" aria-label="Right here. Right now. showcase visual">
+				<img src="assets/right-here-right-now.svg" alt="Right here. Right now." />
+			</div>
 			<div class="hero-copy">
-				<p class="eyebrow">Quality Engineering & Testing</p>
-				<h1>Sogeti Testing Lab</h1>
+				<h1>Sogeti India QE&T Lab</h1>
 				<div class="showcase-copy">
-					<h2>Welcome to the Demo Showcase page for the Sogeti Testing Lab.</h2>
-					<p>This page provides a curated collection of demo recordings designed to highlight key capabilities, use cases, and innovations in testing.</p>
+					<h3>Welcome to the Demo Showcase page for the Sogeti QE&T Lab.</h>
+					<p>This page provides a curated collection of demo recordings designed to highlight key capabilities, use cases, and innovations in Quality Engineering.</p>
 					<p>Explore the demos through the links below for an engaging and streamlined viewing experience.</p>
 				</div>
 				<div class="actions">
@@ -325,15 +714,11 @@
 					<button class="btn secondary" onclick="document.querySelector('#contacts').scrollIntoView()">Request Walkthrough</button>
 				</div>
 			</div>
-			<div class="showcase-visual" role="img" aria-label="Right here. Right now. showcase visual">
-				<strong>Right here<span>.</span><br />Right now<em>.</em></strong>
-				<strong>Right here<span>.</span><br />Right now<em>.</em></strong>
-			</div>
 		</section>
 
 		<section class="stats" aria-label="Portal statistics">
-			<div class="stat"><strong>40+</strong><span>Demo assets</span></div>
-			<div class="stat"><strong>3</strong><span>Active COEs</span></div>
+			<div class="stat"><strong>10+</strong><span>Demo assets</span></div>
+			<div class="stat"><strong>3+</strong><span>Active COEs</span></div>
 			<div class="stat"><strong>15+</strong><span>Reusable accelerators</span></div>
 			<div class="stat"><strong>Monthly</strong><span>Content validation</span></div>
 		</section>
@@ -364,8 +749,8 @@
 				</div>
 				<div class="knowledge-grid">
 					<article class="knowledge-block">
-						<h3>AI powered QE</h3>
-						<p>Increase quality of software projects and programs through our optimized quality and test services.</p>
+						<h3>AI powered QE</h3>         
+						<p>Increase quality of software projects and programs through our optimized quality and Quality Engineering services.</p>
 						<div class="knowledge-items">
 							<div class="knowledge-item"><span class="knowledge-icon">Q</span><a href="https://capgemini.sharepoint.com/sites/KnowNow/SitePages/Services/Quality%20Engineering11/Quality%20Engineering.aspx" target="_blank" rel="noopener noreferrer">Quality Engineering</a></div>
 							<div class="knowledge-item"><span class="knowledge-icon">Q</span><a href="https://capgemini.sharepoint.com/sites/KnowNow/SitePages/Services/Quality%20Engineering11/QA%20Automation.aspx" target="_blank" rel="noopener noreferrer">QA Automation</a></div>
@@ -378,7 +763,7 @@
 					</article>
 					<article class="knowledge-block">
 						<h3>QE of AI</h3>
-						<p>Implement state of the art Quality Automation and AI technologies to optimize the quality and test activities.</p>
+						<p>Implement state of the art Quality Automation and AI technologies to optimize the quality and Quality Engineering activities.</p>
 						<div class="knowledge-items">
 							<div class="knowledge-item"><span class="knowledge-icon">Q</span><a href="https://capgemini.sharepoint.com/sites/KnowNow/SitePages/Services/Quality%20Engineering11/QA%20Automation.aspx" target="_blank" rel="noopener noreferrer">QA Automation</a></div>
 							<div class="knowledge-item"><span class="knowledge-icon">Q</span><a href="https://capgemini.sharepoint.com/sites/KnowNow/SitePages/Services/Quality%20Engineering11/AI%20empowered%20QA%20Engineering.aspx" target="_blank" rel="noopener noreferrer">AI empowered QA Engineering</a></div>
@@ -388,50 +773,64 @@
 			</div>
 		</section>
 
-		<section class="section" id="offerings">
-			<div class="section-head"><div><h2>Offerings & Capabilities</h2><p>Start with the capability that matches your challenge.</p></div></div>
-			<div class="cap-grid">
-				<article class="cap"><img class="icon" src="assets/ai-icon.svg" alt="AI icon" /><h3>AI & Automation</h3><p>Agents, accelerators and intelligent testing workflows.</p></article>
-				<article class="cap"><img class="icon" src="assets/cloud-icon.svg" alt="Cloud and Platform icon" /><h3>Cloud & Platform</h3><p>DevOps validation and cloud quality pathways.</p></article>
-				<article class="cap"><img class="icon" src="assets/data-icon.svg" alt="Data Engineering icon" /><h3>Data Engineering</h3><p>Generation, masking, reconciliation and data quality.</p></article>
-				<article class="cap"><img class="icon" src="assets/sap-icon.svg" alt="SAP icon" /><h3>SAP Testing</h3><p>ERP testing assets and reusable SAP accelerators.</p></article>
+		<section class="section" id="qe-assets">
+			<div class="section-head"><div><h2>Quality Engineering Assets</h2><p>Reusable assets and accelerators across our core QE capability areas.</p></div></div>
+			<div class="cap-grid qea-grid">
+				<article class="cap"><span class="knowledge-icon">Q</span><h3><a href="https://capgemini.sharepoint.com/sites/OM4069/Lists/Testing%20%20Assets%20and%20Accelerators/AllItems.aspx#InplviewHash8ce77871-3ae4-4f5f-a651-240a2b698c8a=FilterField1%3DOffering-FilterValue1%3DAgile%2520Quality%2520Engineering" target="_blank" rel="noopener noreferrer">Agile Quality Engineering</a></h3><p>Embed quality practices into agile delivery cycles.</p></article>
+				<article class="cap"><span class="knowledge-icon">Q</span><h3><a href="https://capgemini.sharepoint.com/sites/OM4069/Lists/Testing%20%20Assets%20and%20Accelerators/AllItems.aspx#InplviewHash8ce77871-3ae4-4f5f-a651-240a2b698c8a=FilterField1%3DOffering-FilterValue1%3DAI%2520and%2520QA%2520Solutions" target="_blank" rel="noopener noreferrer">AI and QA Solutions</a></h3><p>AI-powered testing tools and intelligent QA solutions.</p></article>
+				<article class="cap"><span class="knowledge-icon">Q</span><h3><a href="https://capgemini.sharepoint.com/sites/OM4069/Lists/Testing%20%20Assets%20and%20Accelerators/AllItems.aspx#InplviewHash8ce77871-3ae4-4f5f-a651-240a2b698c8a=FilterField1%3DOffering-FilterValue1%3DPerformance%2520Testing" target="_blank" rel="noopener noreferrer">Performance Testing</a></h3><p>Load, stress and performance validation for critical systems.</p></article>
+				<article class="cap"><span class="knowledge-icon">Q</span><h3><a href="https://capgemini.sharepoint.com/sites/OM4069/Lists/Testing%20%20Assets%20and%20Accelerators/AllItems.aspx#InplviewHash8ce77871-3ae4-4f5f-a651-240a2b698c8a=FilterField1%3DOffering-FilterValue1%3DTest%2520Automation" target="_blank" rel="noopener noreferrer">Test Automation</a></h3><p>Reusable automation frameworks and accelerators.</p></article>
+				<article class="cap"><span class="knowledge-icon">Q</span><h3><a href="https://capgemini.sharepoint.com/sites/OM4069/Lists/Testing%20%20Assets%20and%20Accelerators/AllItems.aspx#InplviewHash8ce77871-3ae4-4f5f-a651-240a2b698c8a=FilterField1%3DOffering-FilterValue1%3DTest%2520Environment%2520and%2520Test%2520data" target="_blank" rel="noopener noreferrer">Test Environment and Test Data</a></h3><p>Environment provisioning and test data management.</p></article>
 			</div>
 		</section>
 
 		<section class="section" id="demos">
-			<div class="section-head"><div><h2>Featured Solution Demos</h2><p>Search by topic and choose a starting point.</p></div><span class="section-link" id="resultCount">4 demos</span></div>
-			<div class="toolbar">
-				<input class="search" id="demoSearch" type="search" placeholder="Search demos or use cases..." aria-label="Search demos" />
-				<div>
+			<div class="section-head"><div><h2>Featured Solution Demos</h2><p>Search by topic and choose a starting point.</p></div></div>
+				<div class="toolbar">
+					<div class="search-wrap"><input class="search" id="demoSearch" type="search" placeholder="Search demos or use cases..." aria-label="Search demos" /></div>
+					<div class="filters">
 					<button class="filter active" data-filter="all">All</button>
 					<button class="filter" data-filter="ai">AI</button>
 					<button class="filter" data-filter="data">Data</button>
 					<button class="filter" data-filter="performance">Performance</button>
+					<button class="filter" data-filter="sap">SAP</button>
+					</div>
 				</div>
-			</div>
 			<div class="demo-grid" id="demoGrid">
-				<article class="demo-card" data-category="ai" data-search="ai automation accelerator agents"><div class="thumb"><h3>AI Automation Accelerator</h3></div><div class="demo-body"><p>Speed up repetitive test design with intelligent automation.</p><div class="tags"><span class="tag">AI</span><span class="tag">8 min</span></div><a class="card-action" href="#contacts">Open demo &rarr;</a></div></article>
-				<article class="demo-card" data-category="performance" data-search="selenium migrator performance automation"><div class="thumb"><h3>Selenium Migrator</h3></div><div class="demo-body"><p>Move legacy automation into a modern, maintainable framework.</p><div class="tags"><span class="tag">Performance</span><span class="tag">7 min</span></div><a class="card-action" href="#contacts">Open demo &rarr;</a></div></article>
-				<article class="demo-card" data-category="data" data-search="data generation database testing"><div class="thumb"><h3>Data Generation DB</h3></div><div class="demo-body"><p>Create reliable test data for faster validation cycles.</p><div class="tags"><span class="tag">Data</span><span class="tag">8 min</span></div><a class="card-action" href="#contacts">Open demo &rarr;</a></div></article>
-				<article class="demo-card" data-category="performance" data-search="pipeline quality gates cicd"><div class="thumb"><h3>Pipeline Quality Gates</h3></div><div class="demo-body"><p>Build quality checks into delivery pipelines with confidence.</p><div class="tags"><span class="tag">Performance</span><span class="tag">9 min</span></div><a class="card-action" href="#contacts">Open demo &rarr;</a></div></article>
+				<article class="demo-card" data-category="ai" data-search="ai automation accelerator agents visual testing selenium migrator"><div class="thumb"><img class="demo-art" src="assets/coe-ai.svg" alt="" /><h3>AI Automation Accelerator</h3></div><div class="demo-body"><p>Explore reusable AI-enabled automation demos for faster, smarter testing workflows.</p><div class="tags"><span class="tag">AI</span><span class="tag">4 demos</span></div><details class="demo-links"><summary>View demos</summary><ul><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/AT%20COE/AI%20Enabled%20Automation%20with%20Agents.mp4?csf=1&amp;web=1&amp;e=s27PQb" target="_blank" rel="noopener noreferrer">AI Enabled Automation with Agents</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/AT%20COE/Automation_tester_demo_.mp4?csf=1&amp;web=1&amp;e=I56fJp" target="_blank" rel="noopener noreferrer">Automation Accelerator Demo</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/AT%20COE/AutomationTester_VisualTestingDentsply_Demo.mp4?csf=1&amp;web=1&amp;e=TUgQEN" target="_blank" rel="noopener noreferrer">Automation Tester Visual Testing Dentsply Demo</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/AT%20COE/selenium_migrator_demo.mp4?csf=1&amp;web=1&amp;e=uRh9Hv" target="_blank" rel="noopener noreferrer">Selenium Migrator Demo</a></li></ul></details></div></article>
+				<article class="demo-card" data-category="sap" data-search="sap testing erp business assurance data extractor dhikraft agents f-srbt scmv sib t annotations"><div class="thumb"><img class="demo-art" src="assets/coe-sap.svg" alt="" /><h3>SAP Testing Accelerator</h3></div><div class="demo-body"><p>Improve ERP release confidence with reusable SAP testing assets.</p><div class="tags"><span class="tag">SAP</span><span class="tag">5 demos</span></div><details class="demo-links"><summary>View demos</summary><ul><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/SAP/1b.%20SAP%20Data%20Extractor.mp4?csf=1&amp;web=1&amp;e=Fut23O" target="_blank" rel="noopener noreferrer">SAP Data Extractor</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/SAP/Dhikraft%20agents.mp4?csf=1&amp;web=1&amp;e=lz78Cs" target="_blank" rel="noopener noreferrer">Dhikraft Agents</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/SAP/F-SRBT.mp4?csf=1&amp;web=1&amp;e=kDaf9j" target="_blank" rel="noopener noreferrer">F-SRBT</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/SAP/SCMV_Edited.mp4?csf=1&amp;web=1&amp;e=FUTQvl" target="_blank" rel="noopener noreferrer">SCMV</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/SAP/SIBT_With_Annotations.mp4?csf=1&amp;web=1&amp;e=AgCtTF" target="_blank" rel="noopener noreferrer">SIBT with Annotations</a></li></ul></details></div></article>
+				<article class="demo-card" data-category="data" data-search="data generation database file masking dst testing cognitiveqa recording"><div class="thumb"><img class="demo-art" src="assets/coe-data.svg" alt="" /><h3>Data Generation DB</h3></div><div class="demo-body"><p>Create reliable test data for faster validation cycles.</p><div class="tags"><span class="tag">Data</span><span class="tag">5 demos</span></div><details class="demo-links"><summary>View demos</summary><ul><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/Data%20COE/CognitiveQA_Recording.mp4?csf=1&amp;web=1&amp;e=BJoLPq" target="_blank" rel="noopener noreferrer">CognitiveQA Recording</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/Data%20COE/Data%20Generation_DB.mp4?csf=1&amp;web=1&amp;e=OjM0ZJ" target="_blank" rel="noopener noreferrer">Data Generation DB</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/Data%20COE/Data%20Generation_File.mp4?csf=1&amp;web=1&amp;e=haOzl0" target="_blank" rel="noopener noreferrer">Data Generation File</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/Data%20COE/Data%20Masking%20Video.mp4?csf=1&amp;web=1&amp;e=kuEyAW" target="_blank" rel="noopener noreferrer">Data Masking</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/Data%20COE/DST%20Demo%20Video.mp4?csf=1&amp;web=1&amp;e=dVv8U7" target="_blank" rel="noopener noreferrer">DST Demo</a></li></ul></details></div></article>
+				<article class="demo-card" data-category="performance" data-search="pipeline quality gates cicd mcp genai performance engineering ptaac"><div class="thumb"><img class="demo-art" src="assets/coe-pt.svg" alt="" /><h3>Pipeline Quality Gates</h3></div><div class="demo-body"><p>Build quality checks into delivery pipelines with confidence.</p><div class="tags"><span class="tag">Performance</span><span class="tag">2 demos</span></div><details class="demo-links"><summary>View demos</summary><ul><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/PT%20COE/MCP-GenAI_Performance%20Engineering.mp4?csf=1&amp;web=1&amp;e=1sacqs" target="_blank" rel="noopener noreferrer">MCP-GenAI Performance Engineering</a></li><li><a href="https://capgemini.sharepoint.com/:v:/r/sites/DAQE_C2Above/Shared%20Documents/General/2026/Test%20Lab/Demo/PT%20COE/PTaaC%20-%20Pipeline%20Demo_without%20Audio.mp4?csf=1&amp;web=1&amp;e=9DdSEZ" target="_blank" rel="noopener noreferrer">PTaaC - Pipeline Demo</a></li></ul></details></div></article>
 			</div>
 		</section>
 
 		<section class="section" id="coes">
-			<div class="section-head"><div><h2>Centers of Excellence</h2><p>Connect with the teams behind the accelerators.</p></div></div>
+			<div class="section-head"><div><h2>Center of Excellence</h2><p>Connect with the teams behind the accelerators.</p></div></div>
 			<div class="coe-grid">
-				<article class="coe-card"><img class="coe-visual" src="assets/coe-ai.svg" alt="AI robot visual" /><div class="coe-body"><strong>AT COE</strong><h3>Automation Testing</h3><p>AI-enabled automation, frameworks and testing agents.</p><a class="card-action" href="#contacts">Explore &rarr;</a></div></article>
-				<article class="coe-card"><img class="coe-visual" src="assets/coe-data.svg" alt="Data platform visual" /><div class="coe-body"><strong>DATA COE</strong><h3>Data Engineering & Quality</h3><p>Data generation, validation and quality solutions.</p><a class="card-action" href="#contacts">Explore &rarr;</a></div></article>
-				<article class="coe-card"><img class="coe-visual" src="assets/coe-pt.svg" alt="Performance gauge visual" /><div class="coe-body"><strong>PT COE</strong><h3>Performance Engineering</h3><p>Performance testing, pipelines and quality gates.</p><a class="card-action" href="#contacts">Explore &rarr;</a></div></article>
-				<article class="coe-card"><img class="coe-visual" src="assets/coe-sap.svg" alt="SAP system visual" /><div class="coe-body"><strong>SAP COE</strong><h3>SAP Testing Excellence</h3><p>SAP testing tools and reusable accelerators.</p><a class="card-action" href="#contacts">Explore &rarr;</a></div></article>
+				<article class="coe-card"><img class="coe-visual" src="assets/coe-ai.svg" alt="AI robot visual" /><div class="coe-body"><strong>AT COE</strong><h3>Automation Quality Engineering</h3><p>AI-enabled automation, frameworks and testing agents.</p><a class="card-action" href="https://capgemini.sharepoint.com/sites/OM4069/Lists/Testing%20Assets%20and%20Accelerators/AllItems.aspx?FilterField1=Offering&FilterValue1=Test%20Automation" target="_blank">Explore &rarr;</a></div></article>
+				<article class="coe-card"><img class="coe-visual" src="assets/coe-data.svg" alt="Data platform visual" /><div class="coe-body"><strong>DATA COE</strong><h3>Data Engineering & Quality</h3><p>Data generation, validation and quality solutions.</p><a class="card-action" href="https://capgemini.sharepoint.com/sites/OM4069/Lists/Testing%20Assets%20and%20Accelerators/AllItems.aspx?FilterField1=Offering&FilterValue1=Data" target="_blank">Explore &rarr;</a></div></article>
+				<article class="coe-card"><img class="coe-visual" src="assets/coe-pt.svg" alt="Performance gauge visual" /><div class="coe-body"><strong>PT COE</strong><h3>Performance Engineering</h3><p>Performance testing, pipelines and quality gates.</p><a class="card-action" href="https://capgemini.sharepoint.com/sites/OM4069/Lists/Testing%20Assets%20and%20Accelerators/AllItems.aspx?FilterField1=Offering&FilterValue1=Performance" target="_blank">Explore &rarr;</a></div></article>
+				<article class="coe-card"><img class="coe-visual" src="assets/coe-sap.svg" alt="SAP system visual" /><div class="coe-body"><strong>SAP COE</strong><h3>SAP Testing Excellence</h3><p>SAP testing tools and reusable accelerators.</p><a class="card-action" href="https://capgemini.sharepoint.com/sites/OM4069/Lists/Testing%20Assets%20and%20Accelerators/AllItems.aspx?FilterField1=Offering&FilterValue1=SAP" target="_blank">Explore &rarr;</a></div></article>
 			</div>
 		</section>
 
+		<section class="section innovation-feature" id="innovation">
+				<div class="innovation-head">
+					<span class="innovation-mark" aria-hidden="true">IN</span>
+					<div><span class="innovation-eyebrow">Innovation</span><h3>From bold ideas to measurable impact</h3><p>Explore three focused capabilities that shape, assess and scale the next generation of intelligent solutions.</p></div>
+				</div>
+				<div class="innovation-grid">
+					<article class="innovation-card"><span class="innovation-icon" aria-hidden="true">A</span><h4>Amplifier Studio</h4><p>Turn early concepts into tangible experiences through rapid experimentation, collaborative design and accelerated prototyping.</p></article>
+					<article class="innovation-card"><span class="innovation-icon" aria-hidden="true">E</span><h4>Evaluate.ai</h4><p>Move beyond assumptions with evidence-led AI evaluation across quality, safety, relevance and real-world performance.</p></article>
+					<article class="innovation-card"><span class="innovation-icon" aria-hidden="true">S</span><h4>SLM</h4><p>Unlock focused intelligence with compact language models engineered for efficient, secure and domain-specific outcomes.</p></article>
+				</div>
+		</section>
+
 		<section class="section" id="contacts">
-			<div class="section-head"><div><h2>Meet Our Experts</h2><p>Need help selecting the right solution? Start here.</p></div></div>
+			<div class="section-head"><div><h2>Connect with our QE Leaders</h2><p>Together, we continue to strengthen our Quality Engineering capabilities and drive consistent quality across all engagements. Reach out to the COE lead and GTM lead to learn more or collaborate.</p></div></div>
 			<div class="contact-grid">
-				<article class="contact-card"><div class="avatar">KB</div><div><h3>Kanchan Bhonde</h3><p>Head of Quality Engineering & Testing Center of Excellence, Sogeti India.</p><button class="contact-btn" onclick="alert('Walkthrough request prepared for Kanchan Bhonde.')">Request walkthrough</button></div></article>
-				<article class="contact-card"><div class="avatar orange">AS</div><div><h3>Amit Singh</h3><p>Director, GTM, QE&T, Sogeti Global.</p><button class="contact-btn" onclick="alert('Walkthrough request prepared for Amit Singh.')">Request walkthrough</button></div></article>
+				<article class="contact-card"><img class="avatar-img" src="assets/kanchan-bhonde.jpg" alt="Kanchan Bhonde" /><div><h3><a href="mailto:kanchan.bhonde@capgemini.com?subject=QE%20Portal%20Enquiry">Kanchan Bhonde</a></h3><p>Head of Quality Engineering & Testing Center of Excellence, Sogeti India.</p></div></article>
+				<article class="contact-card"><img class="avatar-img" src="assets/Amit_singh.jpg" alt="Amit Singh" /><div><h3><a href="mailto:amit.singh@capgemini.com?subject=QE%20Portal%20Enquiry">Amit Singh</a></h3><p>Director, GTM, QE&T, Sogeti Global.</p></div></article>
 			</div>
 			<div class="cta"><div><h3>Not sure where to begin?</h3><p>Book a short session with a QE expert and find the right accelerator.</p></div><button class="btn" id="bookSessionBtn" type="button">Book a session</button></div>
 		</section>
@@ -470,7 +869,6 @@
 		const cards = [...document.querySelectorAll('.demo-card')];
 		const filters = [...document.querySelectorAll('.filter')];
 		const search = document.querySelector('#demoSearch');
-		const resultCount = document.querySelector('#resultCount');
 		const bookSessionBtn = document.querySelector('#bookSessionBtn');
 		const bookSessionModal = document.querySelector('#bookSessionModal');
 		const closeBookSessionBtn = document.querySelector('#closeBookSessionBtn');
@@ -488,12 +886,12 @@
 			let visible = 0;
 			cards.forEach((card) => {
 				const matchesFilter = activeFilter === 'all' || card.dataset.category === activeFilter;
-				const matchesSearch = !query || card.dataset.search.includes(query);
+				const searchableText = `${card.dataset.search} ${card.textContent}`.toLowerCase();
+				const matchesSearch = !query || searchableText.includes(query);
 				const show = matchesFilter && matchesSearch;
-				card.hidden = !show;
+				card.classList.toggle('hidden', !show);
 				if (show) visible += 1;
 			});
-			resultCount.textContent = `${visible} demo${visible === 1 ? '' : 's'}`;
 		}
 
 		filters.forEach((filter) => filter.addEventListener('click', () => {
@@ -512,6 +910,19 @@
 			bookSessionModal.setAttribute('aria-hidden', 'true');
 			bookSessionBtn.focus();
 		}
+
+		const heroArtwork = document.querySelector('.showcase-visual img');
+		const updateArtworkParallax = () => {
+			if (!heroArtwork) return;
+			const rect = heroArtwork.getBoundingClientRect();
+			const viewportCenter = window.innerHeight / 2;
+			const delta = (viewportCenter - rect.top) / window.innerHeight;
+			const offset = Math.max(-12, Math.min(12, delta * 24));
+			heroArtwork.style.setProperty('--parallax-y', `${offset}px`);
+		};
+		window.addEventListener('scroll', updateArtworkParallax, { passive: true });
+		window.addEventListener('resize', updateArtworkParallax);
+		updateArtworkParallax();
 
 		bookSessionBtn.addEventListener('click', openBookSessionModal);
 		closeBookSessionBtn.addEventListener('click', closeBookSessionModal);
@@ -544,7 +955,6 @@
 				domain: sessionDomain.value.trim(),
 				submittedAt: new Date().toISOString()
 			};
-
 			try {
 				if (!FLOW_WEBHOOK_URL) {
 					openMailtoDraft(payload);
