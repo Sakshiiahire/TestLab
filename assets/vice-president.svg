@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title desc">
+  <title id="title">Vice President portrait</title>
+  <desc id="desc">A stylized portrait of a senior professional in a dark suit with a light shirt.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#d9dfe5"/>
+      <stop offset="100%" stop-color="#b8bec7"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="94" fill="url(#bg)"/>
+  <circle cx="100" cy="76" r="30" fill="#f0c5a5"/>
+  <path d="M74 76c2-18 18-31 35-31 19 0 33 13 36 31-9-7-19-11-36-11-17 0-28 5-35 11Z" fill="#4d4d4d"/>
+  <path d="M88 102h24c8 0 14 7 14 16v23H72v-23c0-9 6-16 16-16Z" fill="#f0f4fa"/>
+  <path d="M66 108c8-20 23-29 34-29s28 10 35 29l16 42H50l16-42Z" fill="#1d2c42"/>
+  <path d="M90 111h20l-7 47h-12l-1-47Z" fill="#d6dde6"/>
+  <path d="M73 135l-18 30h26l9-30-17 0Z" fill="#1d2c42"/>
+  <path d="M127 135l18 30h-26l-9-30 17 0Z" fill="#1d2c42"/>
+  <circle cx="92" cy="75" r="3" fill="#2c2c2c"/>
+  <circle cx="109" cy="75" r="3" fill="#2c2c2c"/>
+  <path d="M94 88c4 4 10 4 14 0" stroke="#9a5d3b" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  <path d="M74 70c4-18 20-28 38-28 21 0 34 10 40 27" stroke="#3b3b3b" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>
